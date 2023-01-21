@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %} Edite {% endblock %}
+
+{% block content %}
+<h1>Edite Page</h1>
+
+        <form method="post" action="{% url 'books:edit_review' book.id review.id %}">
+            {% csrf_token %}
+            <!--        crispy ni ishlatish uchun untagni chaqirish kerak     -->
+            {{ review_form | crispy }}
+            <button class="btn btn-success">Add review</button>
+        </form>
+
+{% endblock %}

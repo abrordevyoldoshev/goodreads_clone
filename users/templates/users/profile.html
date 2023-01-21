@@ -1,0 +1,24 @@
+  {% extends "base.html" %}
+
+
+{% block title %} Profile Page
+  {% endblock %}
+
+ {% block content %}
+ <div class="content-profile">
+  <div class="flexs-profile">
+  <img class="profile-img" src="{{user.profile_picture.url}}" alt="">
+  <a class="btn btn-dark" href="{% url 'users:profile-edit' %}">Edite profile</a>
+</div>
+<div class="profile-body">
+  <p>Username: {{user.username}}</p>
+  <p>First Nme: {{user.first_name}}</p>
+  <p>Last Name: {{user.last_name}}</p>
+  <p>Email: {{user.email}}</p>
+    <p>Joined: {{ user.date_joined |date:"M d, Y" }}</p>
+  </div>
+ </div>
+
+
+ {% endblock %}
+

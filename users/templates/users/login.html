@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %} Login Page {% endblock %}
+
+{% block content %}
+<div style="height:80vh; width:100%" class="row d-flex justify-content-center align-items-center ">
+    <div class="col-5">
+<h4 class="text-center">Login</h4>
+        <form method="post">
+            {% csrf_token %}
+<!--        crispy ni ishlatish uchun untagni chaqirish kerak     -->
+            {{ login_form | crispy }}
+            <button class="btn btn-primary w-100" type="submit">Submit</button>
+        </form>
+
+       <p style="color:red; margin-top:1rem">if you are not registered: <a href="{% url 'users:register' %}">register</a></p>
+    </div>
+</div>
+
+{% endblock %}

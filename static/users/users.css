@@ -1,0 +1,26 @@
+.content-profile{
+display: flex;
+align-items: center;
+justify-content: center;
+flex-direction: column;
+gap: 1rem;
+}
+.flexs-profile{
+  display: flex;
+  flex-direction:column;
+}
+
+
+.profile-img{
+  width:200px;
+  height:200px;
+  border-radius:10px;
+  margin-bottom: 10px;
+}
+
+.profile-body{
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+

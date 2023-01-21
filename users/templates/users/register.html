@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %} Register Page {% endblock %}
+
+{% block content %}
+<div style="height:100%; width:100%" class="row d-flex justify-content-center align-items-center ">
+    <div class="col-5">
+        <h4 class="text-center">Register</h4>
+        <form method="post">
+            {% csrf_token %}
+<!--        crispy ni ishlatish uchun untagni chaqirish kerak     -->
+            {{ form | crispy }}
+            <button class="btn btn-primary w-100" type="submit">Submit</button>
+        </form>
+
+        <p style="color:red; margin-top:1rem">If you are registered, go to login: <a href="{% url 'users:login' %}">login</a></p>
+    </div>
+</div>
+{% endblock %}
