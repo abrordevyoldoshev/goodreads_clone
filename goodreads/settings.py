@@ -9,24 +9,33 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
+import environ
 import os
 from pathlib import Path
 import smtplib
 from email.mime.text import MIMEText
 
+# .env fileni ishlatish uchun uni inport qilib bu code yozish kerak
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False)
+)
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+# .env fileni oqitish uchun xuddi shu joyga bucode
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-25tgs2$(x*waf@=1s!1$l7j57bysmxk6yxp=sf95^cc+o)r3ze'
+
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 LOGIN_URL = 'users:login'
 
 # Application definition
@@ -84,13 +93,25 @@ WSGI_APPLICATION = 'goodreads.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'goodreads',
-        'HOST': '127.0.0.1',
+        'NAME': env('DB_NAME'),
+        'HOST': env('DB_HOST'),
         'PORT': '5432',
-        'USER': 'postgres',
-        'PASSWORD': '!@#1996Abrordev'
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD')
     }
 }
+
+# beploy qilishdan oldin bu korinishta email send ishlatiladi
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'goodreads',
+#         'HOST': '127.0.0.1',
+#         'PORT': '5432',
+#         'USER': 'postgres',
+#         'PASSWORD': '!@#1996Abrordev'
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -147,11 +168,19 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'frontend47@gmail.com'
-EMAIL_HOST_PASSWORD = 'wtubmgivxhtovlnc'
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
+# beploy qilishdan oldin bu korinishta email send ishlatiladi
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = 'frontend47@gmail.com'
+# EMAIL_HOST_PASSWORD = 'wtubmgivxhtovlnc'
+# EMAIL_USE_TLS = True
+# EMAIL_USE_SSL = False
 # DEFAULT PAGINATION ni bolib beradi rest framework da
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
